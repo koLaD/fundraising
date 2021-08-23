@@ -1,19 +1,6 @@
 <%@ include file="../../include/importTag.jsp"%>
 <script
 	src="<%=request.getContextPath()%>/resources/plugins/jquery/js/jquery.min.js"></script>
-<style>
-.img-thumbnail {
-	max-height: 180px !important;
-}
-
-.card-header {
-	text-align: center;
-}
-
-.breadScrum {
-	color: #0288d1
-}
-</style>
 <body>
 	<c:if test="${ not empty message }">
 		<div class="alert alert-info alert-dismissible mr-3" style="margin-top: 7px;">

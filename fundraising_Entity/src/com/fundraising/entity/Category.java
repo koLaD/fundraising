@@ -18,8 +18,8 @@ public class Category extends BaseEntity implements Serializable {
 	@Column(name = "Name")
 	private String name;
 
-	@Column(name = "Descritpion")
-	private String descritpion;
+	@Column(name = "Description")
+	private String description;
 
 	public String getName() {
 		return name;
@@ -29,12 +29,12 @@ public class Category extends BaseEntity implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescritpion() {
-		return descritpion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescritpion(String descritpion) {
-		this.descritpion = descritpion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

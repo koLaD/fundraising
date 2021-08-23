@@ -49,6 +49,7 @@ public class LoginController {
 	@GetMapping(value = "/logOut")
 	private String logOut(HttpServletRequest request, Model model) {
 		request.getSession().setAttribute(CommonConstant.LOGIN_USER_SESSION_KEY, null);
+		request.getSession().setAttribute("menuList", null);
 		model.addAttribute("userDTO", new UserDTO());
 		return "logIn";
 	}

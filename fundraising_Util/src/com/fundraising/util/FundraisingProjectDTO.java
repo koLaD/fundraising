@@ -26,6 +26,9 @@ public class FundraisingProjectDTO implements Serializable {
 	private Long updatedUserId;
 	private String projectStatus;
 	private MultipartFile projectImageFile;
+	private Integer pageNo;
+	private String basePath;
+	private Long categoryId;
 
 	public FundraisingProjectDTO() {
 		super();
@@ -35,10 +38,26 @@ public class FundraisingProjectDTO implements Serializable {
 	public FundraisingProjectDTO(FundraisingProject fundraisingProject) {
 		this.id = fundraisingProject.getId();
 		this.title = fundraisingProject.getTitle();
-		this.shortDescription = fundraisingProject.getShortDescritpion();
-		this.description = fundraisingProject.getDescritpion();
+		this.shortDescription = fundraisingProject.getShortDescription();
+		this.description = fundraisingProject.getDescription();
 		this.goalAmount = fundraisingProject.getGoalAmount();
 		this.image = fundraisingProject.getImage();
+		this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
+				fundraisingProject.getCreatedDate());
+		this.updatedDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
+				fundraisingProject.getUpdatedDate());
+		this.createdUserId = fundraisingProject.getCreatedUserId();
+		this.updatedUserId = fundraisingProject.getUpdatedUserId();
+		this.projectStatus = fundraisingProject.getProjectStatus();
+	}
+
+	public FundraisingProjectDTO(FundraisingProject fundraisingProject, String basePath) {
+		this.id = fundraisingProject.getId();
+		this.title = fundraisingProject.getTitle();
+		this.shortDescription = fundraisingProject.getShortDescription();
+		this.description = fundraisingProject.getDescription();
+		this.goalAmount = fundraisingProject.getGoalAmount();
+		this.image = CommonUtil.isValidString(fundraisingProject.getImage()) ? basePath + fundraisingProject.getImage() : "";
 		this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
 				fundraisingProject.getCreatedDate());
 		this.updatedDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
@@ -144,11 +163,35 @@ public class FundraisingProjectDTO implements Serializable {
 		this.projectImageFile = projectImageFile;
 	}
 
+	public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public String getBasePath() {
+		return basePath;
+	}
+
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public FundraisingProject changeToEntity(FundraisingProject fundraisingProject) {
 		fundraisingProject.setId(this.id);
 		fundraisingProject.setTitle(this.title);
-		fundraisingProject.setShortDescritpion(this.shortDescription);
-		fundraisingProject.setDescritpion(this.description);
+		fundraisingProject.setShortDescription(this.shortDescription);
+		fundraisingProject.setDescription(this.description);
 		fundraisingProject.setGoalAmount(this.goalAmount);
 		fundraisingProject.setProjectStatus(this.projectStatus);
 		return fundraisingProject;

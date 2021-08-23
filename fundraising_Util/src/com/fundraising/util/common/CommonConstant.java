@@ -10,4 +10,8 @@ public class CommonConstant {
 	public static final String ACTIVE_MENU_DESC = "activeMenuDesc";
 	public static final String ACTIVE_SUB_MENU = "activeSubMenu";
 	public static final String ACTIVE_SUB_MENU_DESC = "activeSubMenuDesc";
+	public static final String PAGE_TITLE = "pageTitle";
+	
+	public static final Integer ROW_PER_PAGE = 10;
+	public static final String TOTAL_RECORD = "totalRecord";
 }

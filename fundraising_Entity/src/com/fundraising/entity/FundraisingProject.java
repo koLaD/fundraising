@@ -20,12 +20,12 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 
 	@Column(name = "Title")
 	private String title;
+	
+	@Column(name = "ShortDescription")
+	private String shortDescription;
 
-	@Column(name = "ShortDescritpion")
-	private String shortDescritpion;
-
-	@Column(name = "Descritpion")
-	private String descritpion;
+	@Column(name = "Description")
+	private String description;
 
 	@Column(name = "GoalAmount")
 	private String goalAmount;
@@ -48,20 +48,20 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 		this.title = title;
 	}
 
-	public String getShortDescritpion() {
-		return shortDescritpion;
+	public String getShortDescription() {
+		return shortDescription;
 	}
 
-	public void setShortDescritpion(String shortDescritpion) {
-		this.shortDescritpion = shortDescritpion;
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 
-	public String getDescritpion() {
-		return descritpion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescritpion(String descritpion) {
-		this.descritpion = descritpion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getGoalAmount() {

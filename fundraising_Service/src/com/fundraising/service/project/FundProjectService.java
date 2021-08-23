@@ -1,6 +1,8 @@
 package com.fundraising.service.project;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,21 @@ public class FundProjectService {
 
 	public FundraisingProjectDTO getProjectById(Long projectId) {
 		return new FundraisingProjectDTO(fundProjectDAO.get(projectId));
+	}
+
+	public List<FundraisingProjectDTO> searchProjectByCriteria(FundraisingProjectDTO criteria) {
+		List<FundraisingProjectDTO> dtoList = new ArrayList<>();
+		List<FundraisingProject> list =  fundProjectDAO.searchProjectByCriteria(criteria);
+		if(CommonUtil.isValidList(list)) {
+			for(FundraisingProject fp: list) {
+				dtoList.add(new FundraisingProjectDTO(fp,criteria.getBasePath()));
+			}
+		}
+		return dtoList;
+	}
+
+	public Integer getAllRowCount(FundraisingProjectDTO criteria) {
+		return fundProjectDAO.getAllRowCount(criteria);
 	}
 
 }

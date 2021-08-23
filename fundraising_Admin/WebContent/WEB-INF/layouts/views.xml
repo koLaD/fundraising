@@ -19,4 +19,9 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/project/project-manage.jsp" />
 	</definition>
+	
+	<definition name="project-search" extends="main-template">
+		<put-attribute name="body"
+			value="/WEB-INF/views/project/project-search.jsp" />
+	</definition>
 </tiles-definitions>
