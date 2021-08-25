@@ -1,6 +1,7 @@
 package com.fundraising.util;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,8 @@ public class FundraisingProjectDTO implements Serializable {
 	private String title;
 	private String shortDescription;
 	private String description;
-	private String goalAmount;
+	private Double goalAmount;
+	private Double donatedAmount;
 	private String image;
 	private String createdDate;
 	private String updatedDate;
@@ -26,9 +28,11 @@ public class FundraisingProjectDTO implements Serializable {
 	private Long updatedUserId;
 	private String projectStatus;
 	private MultipartFile projectImageFile;
+
+	// search criteria
 	private Integer pageNo;
-	private String basePath;
-	private Long categoryId;
+	private String fromDate;
+	private String toDate;
 
 	public FundraisingProjectDTO() {
 		super();
@@ -41,6 +45,7 @@ public class FundraisingProjectDTO implements Serializable {
 		this.shortDescription = fundraisingProject.getShortDescription();
 		this.description = fundraisingProject.getDescription();
 		this.goalAmount = fundraisingProject.getGoalAmount();
+		this.donatedAmount = fundraisingProject.getDonatedAmount();
 		this.image = fundraisingProject.getImage();
 		this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
 				fundraisingProject.getCreatedDate());
@@ -51,20 +56,9 @@ public class FundraisingProjectDTO implements Serializable {
 		this.projectStatus = fundraisingProject.getProjectStatus();
 	}
 
-	public FundraisingProjectDTO(FundraisingProject fundraisingProject, String basePath) {
-		this.id = fundraisingProject.getId();
-		this.title = fundraisingProject.getTitle();
-		this.shortDescription = fundraisingProject.getShortDescription();
-		this.description = fundraisingProject.getDescription();
-		this.goalAmount = fundraisingProject.getGoalAmount();
-		this.image = CommonUtil.isValidString(fundraisingProject.getImage()) ? basePath + fundraisingProject.getImage() : "";
-		this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
-				fundraisingProject.getCreatedDate());
-		this.updatedDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT,
-				fundraisingProject.getUpdatedDate());
-		this.createdUserId = fundraisingProject.getCreatedUserId();
-		this.updatedUserId = fundraisingProject.getUpdatedUserId();
-		this.projectStatus = fundraisingProject.getProjectStatus();
+	public FundraisingProjectDTO(BigInteger id, String title) {
+		this.id = id.longValue();
+		this.title = title;
 	}
 
 	public Long getId() {
@@ -99,12 +93,20 @@ public class FundraisingProjectDTO implements Serializable {
 		this.description = description;
 	}
 
-	public String getGoalAmount() {
+	public Double getGoalAmount() {
 		return goalAmount;
 	}
 
-	public void setGoalAmount(String goalAmount) {
+	public void setGoalAmount(Double goalAmount) {
 		this.goalAmount = goalAmount;
+	}
+
+	public Double getDonatedAmount() {
+		return donatedAmount;
+	}
+
+	public void setDonatedAmount(Double donatedAmount) {
+		this.donatedAmount = donatedAmount;
 	}
 
 	public String getImage() {
@@ -171,20 +173,20 @@ public class FundraisingProjectDTO implements Serializable {
 		this.pageNo = pageNo;
 	}
 
-	public String getBasePath() {
-		return basePath;
+	public String getFromDate() {
+		return fromDate;
 	}
 
-	public void setBasePath(String basePath) {
-		this.basePath = basePath;
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public String getToDate() {
+		return toDate;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
 	}
 
 	public FundraisingProject changeToEntity(FundraisingProject fundraisingProject) {
@@ -193,6 +195,7 @@ public class FundraisingProjectDTO implements Serializable {
 		fundraisingProject.setShortDescription(this.shortDescription);
 		fundraisingProject.setDescription(this.description);
 		fundraisingProject.setGoalAmount(this.goalAmount);
+		fundraisingProject.setDonatedAmount(this.donatedAmount);
 		fundraisingProject.setProjectStatus(this.projectStatus);
 		return fundraisingProject;
 	}

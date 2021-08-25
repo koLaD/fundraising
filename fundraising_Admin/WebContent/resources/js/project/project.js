@@ -1,7 +1,15 @@
 $(document).ready(
 		function(e) {
 
-			// for banner image
+			if ($("#message").val()) {
+				console.log("swal");
+				swal("", $("#message").val(), "success");
+			}
+			if ($("#errorMsg").val()) {
+				console.log("swal");
+				swal("", $("#errorMsg").val(), "warning");
+			}
+
 			$("#projectImageFile").change(
 					function(e) {
 						e.preventDefault();
@@ -34,8 +42,6 @@ $(document).ready(
 						"#shortDesc").val(), true, null, null, null);
 				var projectStatusErr = checkField("Project Status", $(
 						"#projectStatus-select").val(), true, null, null, 's');
-				var goalAmountErr = checkField("Goal Amount", $("#goalAmount")
-						.val(), true, null, null, 'n');
 				if (titleErr) {
 					$("#titleErrMsg").text(titleErr);
 					errors = 1;
@@ -53,14 +59,12 @@ $(document).ready(
 					$("#projectErrMsg").text(projectStatusErr);
 					errors = 1;
 				}
-				if (goalAmountErr) {
-					$("#goalAmountErrMsg").text(goalAmountErr);
-					errors = 1;
-				} else if ($("#goalAmount").val() <= 0) {
-					$("#goalAmountErrMsg").text(
-							"Goal Amount must be greater than zero");
-					errors = 1;
-				}
-
 			}
+
+			$("#project-search").click(function(e) {
+				$('#pageNo').val(1);
+				$("#frmProjectSearch").attr('action', 'projectSearch.html');
+				$("#frmProjectSearch").submit();
+			});
+
 		});

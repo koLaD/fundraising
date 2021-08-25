@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +17,7 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 
 	@Column(name = "Title")
 	private String title;
-	
+
 	@Column(name = "ShortDescription")
 	private String shortDescription;
 
@@ -28,17 +25,16 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 	private String description;
 
 	@Column(name = "GoalAmount")
-	private String goalAmount;
+	private Double goalAmount;
+
+	@Column(name = "DonatedAmount")
+	private Double donatedAmount;
 
 	@Column(name = "Image")
 	private String image;
 
 	@Column(name = "Status")
 	private String projectStatus;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Category_Id")
-	private Category category;
 
 	public String getTitle() {
 		return title;
@@ -64,12 +60,20 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 		this.description = description;
 	}
 
-	public String getGoalAmount() {
+	public Double getGoalAmount() {
 		return goalAmount;
 	}
 
-	public void setGoalAmount(String goalAmount) {
+	public void setGoalAmount(Double goalAmount) {
 		this.goalAmount = goalAmount;
+	}
+
+	public Double getDonatedAmount() {
+		return donatedAmount;
+	}
+
+	public void setDonatedAmount(Double donatedAmount) {
+		this.donatedAmount = donatedAmount;
 	}
 
 	public String getImage() {
@@ -78,14 +82,6 @@ public class FundraisingProject extends BaseEntity implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	public String getProjectStatus() {

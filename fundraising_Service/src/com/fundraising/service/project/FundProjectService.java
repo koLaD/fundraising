@@ -66,10 +66,10 @@ public class FundProjectService {
 
 	public List<FundraisingProjectDTO> searchProjectByCriteria(FundraisingProjectDTO criteria) {
 		List<FundraisingProjectDTO> dtoList = new ArrayList<>();
-		List<FundraisingProject> list =  fundProjectDAO.searchProjectByCriteria(criteria);
-		if(CommonUtil.isValidList(list)) {
-			for(FundraisingProject fp: list) {
-				dtoList.add(new FundraisingProjectDTO(fp,criteria.getBasePath()));
+		List<FundraisingProject> list = fundProjectDAO.searchProjectByCriteria(criteria);
+		if (CommonUtil.isValidList(list)) {
+			for (FundraisingProject fp : list) {
+				dtoList.add(new FundraisingProjectDTO(fp));
 			}
 		}
 		return dtoList;
@@ -77,6 +77,11 @@ public class FundProjectService {
 
 	public Integer getAllRowCount(FundraisingProjectDTO criteria) {
 		return fundProjectDAO.getAllRowCount(criteria);
+	}
+
+	public List<FundraisingProjectDTO> getAllProject() {
+		List<FundraisingProjectDTO> list = fundProjectDAO.getAllProject();
+		return list;
 	}
 
 }

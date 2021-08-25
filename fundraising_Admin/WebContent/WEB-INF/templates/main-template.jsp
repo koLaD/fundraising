@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/importTag.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,16 +9,28 @@
 <%@ include file="../include/csstemplate.jsp"%>
 </head>
 <body class="layout layout-header-fixed">
-
 	<tiles:insertAttribute name="header"></tiles:insertAttribute>
-
 	<div class="layout-main">
 		<div class="layout-sidebar">
 			<div class="layout-sidebar-backdrop"></div>
 			<tiles:insertAttribute name="left-menu"></tiles:insertAttribute>
 		</div>
 		<div class="layout-content">
-			<tiles:insertAttribute name="body"></tiles:insertAttribute>
+			<div class="layout-content-body">
+				<c:if test="${activeMenuDesc != null && activeMenuDesc != ''}">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb breadcrumb-custom">
+							<li class="breadcrumb-item bccolor">
+								<a href="#" data-abc="true">${activeMenuDesc}</a>
+							</li>
+							<li class="breadcrumb-item bccolor">
+								<a href="#" data-abc="true">${activeSubMenuDesc}</a>
+							</li>
+						</ol>
+					</nav>
+				</c:if>
+				<tiles:insertAttribute name="body"></tiles:insertAttribute>
+			</div>
 		</div>
 		<div class="layout-footer">
 			<tiles:insertAttribute name="footer"></tiles:insertAttribute>

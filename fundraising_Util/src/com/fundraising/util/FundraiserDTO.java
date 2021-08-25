@@ -2,6 +2,11 @@ package com.fundraising.util;
 
 import java.io.Serializable;
 
+import com.fundraising.entity.Fundraiser;
+import com.fundraising.entity.FundraisingProject;
+import com.fundraising.util.common.CommonConstant;
+import com.fundraising.util.common.CommonUtil;
+
 public class FundraiserDTO implements Serializable {
 
 	/**
@@ -12,7 +17,7 @@ public class FundraiserDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String phoneNo;
-	private String email;
+	private String remark;
 	private String image;
 	private String address;
 	private Double amount;
@@ -20,26 +25,28 @@ public class FundraiserDTO implements Serializable {
 	private String updatedDate;
 	private Long createdUserId;
 	private Long updatedUserId;
+	private FundraisingProjectDTO projectDTO;
 
 	public FundraiserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public FundraiserDTO(Long id, String name, String phoneNo, String email, String image, String address, Double amount,
-			String createdDate, String updatedDate, Long createdUserId, Long updatedUserId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.phoneNo = phoneNo;
-		this.email = email;
-		this.image = image;
-		this.address = address;
-		this.amount = amount;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
-		this.createdUserId = createdUserId;
-		this.updatedUserId = updatedUserId;
+	public FundraiserDTO(Fundraiser fundraiser) {
+		this.id = fundraiser.getId();
+		this.name = fundraiser.getName();
+		this.phoneNo = fundraiser.getPhoneNo();
+		this.remark = fundraiser.getRemark();
+		this.image = fundraiser.getImage();
+		this.address = fundraiser.getAddress();
+		this.amount = fundraiser.getAmount();
+		this.createdDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT, fundraiser.getCreatedDate());
+		this.updatedDate = CommonUtil.changeDateToString(CommonConstant.STD_DATE_TIME_FORMAT, fundraiser.getUpdatedDate());
+		this.createdUserId = fundraiser.getCreatedUserId();
+		this.updatedUserId = fundraiser.getUpdatedUserId();
+		if (fundraiser.getFundraisingProject() != null) {
+			this.projectDTO = new FundraisingProjectDTO(fundraiser.getFundraisingProject());
+		}
 	}
 
 	public Long getId() {
@@ -66,12 +73,12 @@ public class FundraiserDTO implements Serializable {
 		this.phoneNo = phoneNo;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getRemark() {
+		return remark;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public String getImage() {
@@ -128,6 +135,26 @@ public class FundraiserDTO implements Serializable {
 
 	public void setUpdatedUserId(Long updatedUserId) {
 		this.updatedUserId = updatedUserId;
+	}
+
+	public FundraisingProjectDTO getProjectDTO() {
+		return projectDTO;
+	}
+
+	public void setProjectDTO(FundraisingProjectDTO projectDTO) {
+		this.projectDTO = projectDTO;
+	}
+
+	public Fundraiser changeToEntity(Fundraiser fundraiser) {
+		fundraiser.setName(this.name);
+		fundraiser.setPhoneNo(this.phoneNo);
+		fundraiser.setAmount(this.amount);
+		fundraiser.setAddress(this.address);
+		fundraiser.setRemark(this.remark);
+		FundraisingProject fp = new FundraisingProject();
+		fp.setId(this.projectDTO.getId());
+		fundraiser.setFundraisingProject(fp);
+		return fundraiser;
 	}
 
 }

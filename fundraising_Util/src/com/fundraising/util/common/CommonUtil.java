@@ -11,12 +11,24 @@ public class CommonUtil {
 		if (date == null) {
 			return null;
 		}
-
 		if (format == null || format.trim().isEmpty()) {
 			format = CommonConstant.STD_DATE_TIME_FORMAT;
 		}
-
 		return new SimpleDateFormat(format).format(date);
+	}
+
+	public static Date stringToDate(String format, String dateString) {
+		if (dateString == null || dateString.trim().isEmpty()) {
+			return null;
+		}
+		if (format == null || format.trim().isEmpty()) {
+			format = CommonConstant.STD_DATE_TIME_FORMAT;
+		}
+		try {
+			return new SimpleDateFormat(format).parse(dateString);
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	public static boolean isValidLong(Long value) {
@@ -32,7 +44,7 @@ public class CommonUtil {
 	}
 
 	public static boolean isValidString(String value) {
-		if (value != null && value.trim() != "")
+		if (value != null && !value.trim().isEmpty())
 			return true;
 		return false;
 	}
@@ -48,7 +60,7 @@ public class CommonUtil {
 			return true;
 		return false;
 	}
-	
+
 	public static boolean isValidList(List value) {
 		if (value != null && value.size() > 0)
 			return true;

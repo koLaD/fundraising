@@ -15,3 +15,10 @@
 <script
 	src="<%=request.getContextPath()%>/resources/plugins/lightbox2-master/js/lightbox.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/ac-lightbox.js"></script>
+
+ <!-- sweet alert Js -->
+<script src="<%=request.getContextPath()%>/resources/js/sweetalert/sweetalert.min.js"></script>
+
+<!-- custom js -->
+<script src="<%=request.getContextPath()%>/resources/js/project/project.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/fundraiser/fundraiser.js"></script>

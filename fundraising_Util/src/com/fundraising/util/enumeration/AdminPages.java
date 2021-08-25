@@ -2,7 +2,9 @@ package com.fundraising.util.enumeration;
 
 public enum AdminPages {
 	FUND_PROJECT("FUND_PROJECT", "Fund Project"), FUND_PROJECT_MANAGE("FUND_PROJECT_MANAGE",
-			"Fund Project Manage"), FUND_PROJECT_SEARCH("FUND_PROJECT_SEARCH", "Fund Project Search");
+			"Fund Project Manage"), FUND_PROJECT_SEARCH("FUND_PROJECT_SEARCH", "Fund Project Search"), FUND_RAISER("FUND_RAISER",
+					"Fundraiser"), FUND_RAISER_MANAGE("FUND_RAISER_MANAGE",
+							"Fundraiser Manage"), FUND_RAISER_SEARCH("FUND_RAISER_SEARCH", "Fundraiser Search");
 
 	private String code;
 	private String desc;

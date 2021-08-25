@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fundraising.admin.controller.commonn.BaseController;
 import com.fundraising.service.project.FundProjectService;
 import com.fundraising.util.FundraisingProjectDTO;
 import com.fundraising.util.UserDTO;
@@ -22,7 +24,7 @@ import com.fundraising.util.enumeration.AdminPages;
 import com.fundraising.util.enumeration.ProjectStatus;
 
 @Controller
-public class ProjectController {
+public class ProjectController extends BaseController {
 
 	@Autowired
 	private FundProjectService fundProjectService;
@@ -33,9 +35,15 @@ public class ProjectController {
 	}
 
 	@GetMapping(value = "/projectManage")
-	private String projectSetup(Model model) {
-		model.addAttribute("projectDTO", new FundraisingProjectDTO());
-		commonModel(model, AdminPages.FUND_PROJECT_MANAGE.getCode(), AdminPages.FUND_PROJECT_MANAGE.getDesc(), 0);
+	private String projectSetup(Model model, @RequestParam(name = "id", required = false) Long id) {
+		FundraisingProjectDTO dto = new FundraisingProjectDTO();
+		if (CommonUtil.isValidLong(id)) {
+			dto = fundProjectService.getProjectById(id);
+		}
+		model.addAttribute("projectDTO", dto);
+		commonLoad(model);
+		commonModel(model, AdminPages.FUND_PROJECT.getCode(), AdminPages.FUND_PROJECT.getDesc(),
+				AdminPages.FUND_PROJECT_MANAGE.getCode(), AdminPages.FUND_PROJECT_MANAGE.getDesc(), 0);
 		return "project-manage";
 	}
 
@@ -62,7 +70,9 @@ public class ProjectController {
 			}
 		}
 		model.addAttribute("projectDTO", dto);
-		commonModel(model, AdminPages.FUND_PROJECT_MANAGE.getCode(), AdminPages.FUND_PROJECT_MANAGE.getDesc(), 0);
+		commonLoad(model);
+		commonModel(model, AdminPages.FUND_PROJECT.getCode(), AdminPages.FUND_PROJECT.getDesc(),
+				AdminPages.FUND_PROJECT_MANAGE.getCode(), AdminPages.FUND_PROJECT_MANAGE.getDesc(), 0);
 		return "project-manage";
 	}
 
@@ -71,8 +81,6 @@ public class ProjectController {
 
 		FundraisingProjectDTO criteria = new FundraisingProjectDTO();
 		criteria.setPageNo(1);
-		criteria.setBasePath(ImageUtil.getBasePath(request));
-
 		List<FundraisingProjectDTO> dtoList = fundProjectService.searchProjectByCriteria(criteria);
 
 		// for pagination
@@ -84,22 +92,35 @@ public class ProjectController {
 
 		model.addAttribute("projectList", dtoList);
 		model.addAttribute("projectDTO", new FundraisingProjectDTO());
-		commonModel(model, AdminPages.FUND_PROJECT_SEARCH.getCode(), AdminPages.FUND_PROJECT_SEARCH.getDesc(), allRowCount);
+		commonLoad(model);
+		commonModel(model, AdminPages.FUND_PROJECT.getCode(), AdminPages.FUND_PROJECT.getDesc(),
+				AdminPages.FUND_PROJECT_SEARCH.getCode(), AdminPages.FUND_PROJECT_SEARCH.getDesc(), allRowCount);
 		return "project-search";
 	}
 
-	public void commonModel(Model model, String subMenu, String subMenuDesc, Integer totalRecord) {
+	@PostMapping(value = "/projectSearch")
+	private String postProjectSearch(Model model, HttpServletRequest request,
+			@ModelAttribute("projectDTO") FundraisingProjectDTO projectDTO) {
+
+		List<FundraisingProjectDTO> dtoList = fundProjectService.searchProjectByCriteria(projectDTO);
+
+		// for pagination
+		Integer allRowCount = fundProjectService.getAllRowCount(projectDTO);
+		int pageCount = (int) Math.ceil((allRowCount * 1.0) / CommonConstant.ROW_PER_PAGE);
+		model.addAttribute("pageCount", pageCount);
+		model.addAttribute("page", projectDTO.getPageNo());
+		model.addAttribute("rowPerPage", CommonConstant.ROW_PER_PAGE);
+
+		model.addAttribute("projectList", dtoList);
+		model.addAttribute("projectDTO", projectDTO);
+		commonLoad(model);
+		commonModel(model, AdminPages.FUND_PROJECT.getCode(), AdminPages.FUND_PROJECT.getDesc(),
+				AdminPages.FUND_PROJECT_SEARCH.getCode(), AdminPages.FUND_PROJECT_SEARCH.getDesc(), allRowCount);
+		return "project-search";
+	}
+
+	public void commonLoad(Model model) {
 		model.addAttribute("porjectStatusList", ProjectStatus.values());
-		model.addAttribute(CommonConstant.ACTIVE_MENU, AdminPages.FUND_PROJECT.getCode());
-		model.addAttribute(CommonConstant.ACTIVE_MENU_DESC, AdminPages.FUND_PROJECT.getDesc());
-		model.addAttribute(CommonConstant.ACTIVE_SUB_MENU, subMenu);
-		model.addAttribute(CommonConstant.ACTIVE_SUB_MENU_DESC, subMenuDesc);
-		model.addAttribute(CommonConstant.PAGE_TITLE, subMenuDesc);
-		if (totalRecord > 1) {
-			model.addAttribute(CommonConstant.TOTAL_RECORD, "Total " + totalRecord + " records.");
-		} else {
-			model.addAttribute(CommonConstant.TOTAL_RECORD, "Total " + totalRecord + " record.");
-		}
 	}
 
 }
